@@ -54,3 +54,15 @@ Documentation
 -------------
 
 * Additional documentation in the [docs folder](docs).
+
+Prune low memory configuration
+-------------------
+`/bitcoin/.bitcoin/bitcoin.conf`
+```
+prune=550
+minrelaytxfee=0.00005
+limitfreerelay=0
+dbcache=50
+maxmempool=100
+maxorphantx=10
+```

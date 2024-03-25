@@ -1,7 +1,3 @@
-# Smallest base image, latests stable image
-# Alpine would be nice, but it's linked again musl and breaks the bitcoin core download binary
-#FROM alpine:latest
-
 FROM ubuntu:latest AS builder
 ARG TARGETARCH
 
@@ -14,16 +10,9 @@ ENV ARCH=riscv64
 
 FROM builder_${TARGETARCH} AS build
 
-# Testing: gosu
-#RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories \
-#    && apk add --update --no-cache gnupg gosu gcompat libgcc
-RUN apt update \
-    && apt install -y --no-install-recommends \
-    ca-certificates \
-    gnupg \
-    libatomic1 \
-    wget \
-    && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt update && \
+    apt install -y --no-install-recommends ca-certificates gnupg libatomic1 wget && \
+    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION=26.0
 ARG BITCOIN_CORE_SIGNATURE=71A3B16735405025D447E8F274810B012346C9A6
